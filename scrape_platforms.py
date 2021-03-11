@@ -122,17 +122,17 @@ def get_twitter_data(keyword, from_date, to_date):
 #%% Scrape desired data (might take a while)
 
 # Get Google data and save them
-google = get_google_trends_data('Bitcoin', '2013-10-01', '2020-12-31')
+google = get_google_trends_data('Bitcoin', '2013-10-01', '2020-12-15')
 google.to_csv('data/google_data.csv')
 
 # Get Wikipedia data and save them
-wikipedia = get_wikipedia_data('Bitcoin', '20131001', '20201231')
+wikipedia = get_wikipedia_data('Bitcoin', '20131001', '20201215')
 wikipedia.to_csv('data/wikipedia_data.csv')
 
 # Get Reddit data and save them
-reddit = get_reddit_data('Bitcoin', 1380585600, 1609459200)
+reddit = get_reddit_data('Bitcoin', 1380585600, 1608076800)
 reddit.to_csv('data/reddit_data.csv')
 
 # Get Twitter data and save them
-twitter = get_twitter_data('Bitcoin', '2013-10-01', '2020-12-31')
+twitter = get_twitter_data('Bitcoin', '2013-10-01', '2020-12-15')
 twitter.to_csv('data/twitter_data.csv')

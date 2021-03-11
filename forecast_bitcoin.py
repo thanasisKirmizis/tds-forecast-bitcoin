@@ -1,6 +1,5 @@
 
 #%% Import modules
-
 from neuralprophet import NeuralProphet
 import pandas as pd
 import numpy as np
@@ -75,7 +74,7 @@ print(grangers_causality_matrix(norm_df, variables = norm_df.columns[1:], maxlag
 norm_df = norm_df.drop(columns = ['Reddit', 'Wikipedia'])
 
 
-#%% Step 1: Overview of training fit
+#%% Overview of training fit
 
 # Initialize NeuralProphet model and add platform traffics as lagged regressors
 m = NeuralProphet(n_forecasts = 14, n_lags = 14, daily_seasonality = False, seasonality_mode = "multiplicative")
@@ -109,7 +108,7 @@ plt.xlabel("Actual values", fontsize = 18)
 plt.ylabel("Fitted values", fontsize = 18)
 plt.title("Regression fit to training data", fontsize = 20)
 
-#%% Step 2: Train simple model and make forecasts based on 2-weeks windows
+#%% Train simple model and make forecasts based on 2-weeks windows
 
 fcst_1 = []
 test_1 = norm_df[norm_df['ds'] >= pd.to_datetime('15/9/2020', format = "%d/%m/%Y")]
@@ -117,14 +116,16 @@ test_1 = test_1[test_1['ds'] < pd.to_datetime('15/12/2020', format = "%d/%m/%Y")
 
 for d in test_1['ds'][::14]:
     
-    print("Predicting week", d.date())
+    print("Predicting 14-days starting from", d.date())
     print("--------------------------")
     
     # Keep all data up until current date as training data 
     train_1 = norm_df[norm_df['ds'] < d]
+	
+	# Drop all external regressors for the simple model
     train_1 = train_1.drop(columns = ['Google', 'Twitter'])
     
-    # Initialize NeuralProphet model and add platform traffics as lagged regressors
+    # Initialize simple NeuralProphet model
     m = NeuralProphet(n_forecasts = 14, n_lags = 14, daily_seasonality = False, seasonality_mode = "multiplicative")
     
     # Fit model and predict
@@ -132,7 +133,7 @@ for d in test_1['ds'][::14]:
     future = m.make_future_dataframe(train_1, periods = 14)
     forecast = m.predict(future)
     
-    # Append weekly forecast to the list of forecasts
+    # Append 14-day forecast to the list of forecasts
     for i in range(14):
         fcst_1.append(forecast['yhat' + str(i+1)][i + 14])
 
@@ -158,7 +159,7 @@ ax.text(0.66, 0.05, str("Mean absolute percentage error: %.2f" % mape_1) + "%", 
 plt.show()
 
 
-#%% Step 3: Add regressors and repeat the above steps 
+#%% Add regressors and repeat the above steps 
 
 fcst_2 = []
 test_2 = norm_df[norm_df['ds'] >= pd.to_datetime('15/9/2020', format = "%d/%m/%Y")]
@@ -166,7 +167,7 @@ test_2 = test_2[test_2['ds'] < pd.to_datetime('15/12/2020', format = "%d/%m/%Y")
 
 for d in test_2['ds'][::14]:
     
-    print("Predicting week", d.date())
+    print("Predicting 14-days starting from", d.date())
     print("--------------------------")
     
     # Keep all data up until current date as training data 
@@ -183,7 +184,7 @@ for d in test_2['ds'][::14]:
     future = m.make_future_dataframe(train_2, periods = 14)
     forecast = m.predict(future)
     
-    # Append weekly forecast to the list of forecasts
+    # Append 14-day forecast to the list of forecasts
     for i in range(14):
         fcst_2.append(forecast['yhat' + str(i+1)][i + 14])
 
