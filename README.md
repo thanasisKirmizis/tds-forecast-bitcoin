@@ -1,2 +1,2 @@
-# tds-forecast-bitcoin
-The code for my article "Scraping data from online platforms to enhance time-series forecasts" on Towards Data Science
+# Scraping Data from Online Platforms to Enhance Time Series Forecasts
+This repository holds the code for my article "Scraping Data from Online Platforms to Enhance Time Series Forecasts" on Towards Data Science.
