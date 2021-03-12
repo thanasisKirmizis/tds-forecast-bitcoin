@@ -28,7 +28,7 @@ def grangers_causality_matrix(data, variables, maxlag, test = 'ssr_chi2test', ve
 
 #%% Read data and rename columns according to NeuralProphet
 
-df = pd.read_csv('data/all_data.csv', sep = ';', usecols = [0,1,2,3,4,8])
+df = pd.read_csv('data/all_data.csv', sep = ',', usecols = [0,1,2,3,4,8])
 df.rename(columns = {'date': 'ds', 'Close': 'y'}, inplace = True)
 
 
